@@ -1,0 +1,19 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".git**"
+  workflow_dispatch:
+  # To ensure that there is a fresh image in ECR to mitigate lifecycle policy rules
+  schedule:
+    - cron: '8 2 * * 1'
+
+jobs:
+  release:
+    name: Release
+    uses: alphagov/govuk-infrastructure/.github/workflows/release.yml@main
+    secrets:
+      GH_TOKEN: ${{ secrets.GOVUK_CI_GITHUB_API_TOKEN }}
