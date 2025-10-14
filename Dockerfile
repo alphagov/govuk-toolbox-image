@@ -43,6 +43,18 @@ RUN curl -Ssf "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" \
     chmod +x "${awscli_install_dir}/aws/dist/aws"
 ENV PATH=$PATH:$awscli_install_dir/aws/dist
 
+ARG kubernetes_version=v1.34
+# hadolint ignore=DL3008
+RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/${kubernetes_version}/deb/Release.key" | \
+  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+  chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${kubernetes_version}/deb/ /" | \
+  tee /etc/apt/sources.list.d/kubernetes.list && \
+  chmod 644 /etc/apt/sources.list.d/kubernetes.list && \
+  apt-get update -qq && \
+  apt-get install -qy --no-install-recommends kubectl && \
+  rm -fr /var/lib/apt/lists/* /tmp/*
+
 COPY --from=peakcom/s5cmd:v2.2.2 s5cmd /bin/s5cmd
 
 RUN groupadd -g 1001 user ; \
@@ -63,7 +75,8 @@ RUN aws --version ; \
     dropdb --version ; \
     redis-cli --version ; \
     echo -n "s5cmd "; s5cmd version ; \
-    yq --version
+    yq --version ; \
+    kubectl version --client
 
 CMD ["/bin/bash"]
 LABEL org.opencontainers.image.source=https://github.com/alphagov/govuk-infrastructure/tree/main/images/toolbox/
