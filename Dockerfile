@@ -19,7 +19,7 @@ RUN apt-get update -qq ; \
     echo "deb [arch=${TARGETARCH} signed-by=${keyrings_dir}/mongodb.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb.list ; \
     apt-get update -qq ; \
     apt-get install -qy --no-install-recommends \
-        curl file gh git jq libarchive-tools mysql-client netcat-openbsd \
+        curl dnsutils file gh git jq libarchive-tools mysql-client netcat-openbsd \
         postgresql-common pv wget2 gettext mongodb-mongosh=2.2.10 \
         mongodb-database-tools=100.9.4 redis-tools ; \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y ; \
@@ -76,7 +76,9 @@ RUN aws --version ; \
     redis-cli --version ; \
     echo -n "s5cmd "; s5cmd version ; \
     yq --version ; \
-    kubectl version --client
+    kubectl version --client ; \
+    dig -v ; \
+    host -V
 
 CMD ["/bin/bash"]
 LABEL org.opencontainers.image.source=https://github.com/alphagov/govuk-infrastructure/tree/main/images/toolbox/
