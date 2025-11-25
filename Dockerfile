@@ -76,7 +76,9 @@ RUN aws --version ; \
     redis-cli --version ; \
     echo -n "s5cmd "; s5cmd version ; \
     yq --version ; \
-    kubectl version --client
+    kubectl version --client ; \
+    dig -v ; \
+    host -V
 
 CMD ["/bin/bash"]
 LABEL org.opencontainers.image.source=https://github.com/alphagov/govuk-infrastructure/tree/main/images/toolbox/
