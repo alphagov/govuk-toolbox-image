@@ -55,7 +55,7 @@ RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/${kubernetes_version}/deb/Rele
   apt-get install -qy --no-install-recommends kubectl && \
   rm -fr /var/lib/apt/lists/* /tmp/*
 
-COPY --from=peakcom/s5cmd:v2.2.2 s5cmd /bin/s5cmd
+COPY --from=peakcom/s5cmd:v2.3.0 s5cmd /bin/s5cmd
 
 RUN groupadd -g 1001 user ; \
     useradd -mu 1001 -g user user
