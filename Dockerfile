@@ -24,7 +24,7 @@ RUN apt-get update -qq ; \
         mongodb-database-tools=100.9.4 redis-tools ; \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y ; \
     apt-get install -qy --no-install-recommends \
-        postgresql-client-17 ; \
+        postgresql-client-18 ; \
     rm -fr /var/lib/apt/lists/*
 
 ARG yq_package_url=https://github.com/mikefarah/yq/releases/latest/download
