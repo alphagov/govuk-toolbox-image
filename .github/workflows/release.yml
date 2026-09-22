@@ -15,5 +15,7 @@ jobs:
   release:
     name: Release
     uses: alphagov/govuk-infrastructure/.github/workflows/release.yml@main
+    with:
+      generate_release_notes: false
     secrets:
       GH_TOKEN: ${{ secrets.GOVUK_CI_GITHUB_API_TOKEN }}
