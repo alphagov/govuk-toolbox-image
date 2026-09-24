@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM public.ecr.aws/lts/ubuntu:24.04
+FROM public.ecr.aws/lts/ubuntu:24.04
 ARG TARGETARCH
 SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 
@@ -35,6 +35,13 @@ RUN curl -fsSL "${yq_package_url}/${yq_binary}.tar.gz" \
     cp "${yq_binary}" /usr/bin/yq ; \
     rm -fr /tmp/*
 
+ARG go_version=1.26.5
+RUN curl -fsSL "https://go.dev/dl/go${go_version}.linux-${TARGETARCH}.tar.gz" \
+        | tar -xzf - ;\
+    cp -r "go" /usr/local ; \
+    rm -fr /tmp/*
+ENV PATH=$PATH:/usr/local/go/bin
+
 ARG awscli_install_dir=/opt
 RUN curl -Ssf "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" \
         | bsdtar -C "${awscli_install_dir}" -xf - \
@@ -43,7 +50,7 @@ RUN curl -Ssf "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" \
     chmod +x "${awscli_install_dir}/aws/dist/aws"
 ENV PATH=$PATH:$awscli_install_dir/aws/dist
 
-ARG kubernetes_version=v1.34
+ARG kubernetes_version=v1.36
 # hadolint ignore=DL3008
 RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/${kubernetes_version}/deb/Release.key" | \
   gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
@@ -65,6 +72,7 @@ USER user
 # Crude smoke test.
 RUN aws --version ; \
     gh --version ; \
+    go version ; \
     jq --version ; \
     echo -n "mongosh "; mongosh --version ; \
     mongodump --version ; \
