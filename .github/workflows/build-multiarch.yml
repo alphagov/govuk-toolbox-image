@@ -7,7 +7,7 @@ jobs:
   build-and-publish-image:
     if: startsWith(github.event.release.tag_name, 'v')
     name: Build and publish image
-    uses: alphagov/govuk-infrastructure/.github/workflows/build-and-push-multiarch-image.yml@main
+    uses: alphagov/govuk-infrastructure/.github/workflows/build-push-arm-image.yml@main
     with:
       gitRef: ${{ github.event.release.tag_name }}
     permissions:
