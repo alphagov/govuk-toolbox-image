@@ -34,7 +34,7 @@ RUN --mount=type=secret,id=zscaler_ca,target=/run/zscaler.crt,required=false \
     echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${kubernetes_version}/deb/ /" > /etc/apt/sources.list.d/kubernetes.list && \
     apt-get update -qq && \
     apt-get install -qy --no-install-recommends \
-        dnsutils file gh git jq libarchive-tools make mysql-client netcat-openbsd \
+        dnsutils file gcc libc-dev gh git jq libarchive-tools make mysql-client netcat-openbsd \
         postgresql-common pv wget2 gettext mongodb-mongosh=2.2.10 \
         mongodb-database-tools=100.9.4 redis-tools kubectl && \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && \
