@@ -30,7 +30,7 @@
             ],
             "depNameTemplate": "kubernetes/kubernetes",
             "datasourceTemplate": "github-releases",
-            "extractVersion": "^(?<version>v\\d+\\.\\d+)",
+            "extractVersionTemplate": "^(?<version>v\\d+\\.\\d+)",
             "versioningTemplate": "semver-coerced"
         }
     ]
