@@ -52,7 +52,7 @@ RUN yq_binary="yq_linux_${TARGETARCH}" && \
     chmod +x "${awscli_install_dir}/aws/dist/aws" && \
     rm -fr /tmp/* /var/tmp/*
 
-ARG go_version=1.26.5
+ARG go_version=1.27.3
 RUN curl -fsSL "https://go.dev/dl/go${go_version}.linux-${TARGETARCH}.tar.gz" \
         | tar -xzf - && \
     cp -r go /usr/local && \
