@@ -1,0 +1,37 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended"
+    ],
+    "enabledManagers": [
+        "custom.regex"
+    ],
+    "minimumReleaseAge": "10 days",
+    "customManagers": [
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^Dockerfile$/"
+            ],
+            "matchStrings": [
+                "ARG go_version=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+            ],
+            "depNameTemplate": "go",
+            "datasourceTemplate": "golang-version",
+            "versioningTemplate": "semver"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": [
+                "/^Dockerfile$/"
+            ],
+            "matchStrings": [
+                "ARG kubernetes_version=(?<currentValue>v\\d+\\.\\d+)"
+            ],
+            "depNameTemplate": "kubernetes/kubernetes",
+            "datasourceTemplate": "github-releases",
+            "extractVersion": "^(?<version>v\\d+\\.\\d+)",
+            "versioningTemplate": "semver-coerced"
+        }
+    ]
+}
