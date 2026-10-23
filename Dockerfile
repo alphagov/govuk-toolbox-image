@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM public.ecr.aws/lts/ubuntu:24.04
+FROM public.ecr.aws/lts/ubuntu:26.04
 
 ARG TARGETARCH
 ARG github_apt_repo=https://cli.github.com/packages
