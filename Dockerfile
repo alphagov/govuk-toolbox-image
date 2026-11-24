@@ -4,7 +4,7 @@ FROM public.ecr.aws/lts/ubuntu:24.04
 ARG TARGETARCH
 ARG github_apt_repo=https://cli.github.com/packages
 ARG keyrings_dir=/usr/share/keyrings
-ARG kubernetes_version=v1.36
+ARG kubernetes_version=v1.37
 ARG yq_package_url=https://github.com/mikefarah/yq/releases/latest/download
 ARG awscli_install_dir=/opt
 
